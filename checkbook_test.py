@@ -1,3 +1,7 @@
+import locale
+locale.setlocale(locale.LC_ALL, '')
+
+
 print(" ~~~~~~~ Welcome to Your Cash Money ~~~~~~~~~~~~")   # Epic introduction 
 print()
 
@@ -14,8 +18,8 @@ while app_running == True:
     print("1.) View current balance")
     print("2.) Record a debit")
     print("3.) Record a credit")
-    print("4.) View transaction history")
-    print("5.) Exit application")
+    print("4.) Show me the cash money")
+    print("5.) Exit")
     user_choice = input("Enter destination: ")
     
     if user_choice == "1":
@@ -23,7 +27,7 @@ while app_running == True:
         print()
         with open('transactions.txt') as f:
             lines = f.read()
-            clean_lines = lines.replace("$", "").replace(",","")
+            clean_lines = lines.replace("$","").replace(",","")
             current_balance = [ float(num) for num in clean_lines.split()]
             print(f"This is your current financial status ${sum(current_balance)}")
         print()
@@ -32,8 +36,13 @@ while app_running == True:
     elif user_choice == "2":
         print()
         print()
-       # (f"How much would you like to withdraw: {withdraw_amount}")
-        withdraw_amount = input(f"How much would you like to withdraw: ")
+        while True:
+            withdraw_amount = input(f"How much would you like to withdraw: ")
+            try:
+                val = float(withdraw_amount)
+                break
+            except ValueError:
+                print("Not a number. Please input a number.")
         filename = "transactions.txt"
         with open(filename, "a") as f:
             f.write("-" + withdraw_amount + "\n")
@@ -43,7 +52,13 @@ while app_running == True:
     elif user_choice == "3":
         print()
         print()
-        deposit_amount = input(f"How much would you like to deposit: ")
+        while True:
+            deposit_amount = input(f"How much would you like to deposit: ")
+            try:
+                val = float(deposit_amount)
+                break
+            except ValueError:
+                print("Not a number...please input a number")
         filename = "transactions.txt"
         with open(filename, "a") as f:
             f.write(deposit_amount + "\n")
